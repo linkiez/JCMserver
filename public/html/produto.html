@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="../css/normalize.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="../css/index.css" rel="stylesheet">
+
+    <title>Produto</title>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <h2>Produto</h2>
+        <div id = "divMensagem" class = "alert"></div>
+        <hr>
+        <form>
+            <label>Código:</label> <input type="text" name="idProduto" id="idProduto" disabled>
+            <label>Nome:</label> <input name="nomeProduto" type="text" id="nomeProduto" placeholder="Nome" required>
+            <label>Categoria:</label> <select name="categoriaProduto" id="categoriaProduto">
+                <option value=""></option>
+                <option value="Chapa">Chapa</option>
+                <option value="Barra">Barra</option>
+                <option value="Peça" >Peça</option>
+            </select>
+            <label>Espessura: </label> <input type="number" name="espessuraProduto" id="espessuraProduto" placeholder="mm">
+            <label>Peso M²/Linear/Peça:</label> <input type="number" name="pesoProduto" id="pesoProduto" placeholder="kg">
+            <label>Data Criação:</label> <input type="text" name="criacaoProduto" id="criacaoProduto" disabled>
+            <label>Última alteração:</label> <input type="text" name="alteracaoProduto" id="alteracaoProduto" disabled>
+
+        </form>
+        <hr>
+        <button name="btExcluir" id="btExcluir" class="btn btn-outline-danger">Excluir</button>
+        <button name="btSalvar" id="btSalvar" class="btn btn-outline-success">Salvar</button>
+        <a href="./listaProdutos.html"><button name="btVoltar" id="btVoltar" class="btn btn-outline-primary">Voltar</button></a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+    </script>
+    <script src="../js/mensagemView.js"></script>
+    <script src="../js/produtoController.js"></script>
+</body>
+
+</html>
