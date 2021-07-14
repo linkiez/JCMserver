@@ -6,7 +6,6 @@
     "noImplicitAny": true,
     "removeComments": true,
     "module": "ES2020",
-    "strictNullChecks": true
   },
   "include": ["public/ts/**/*"],
   "exclude": []

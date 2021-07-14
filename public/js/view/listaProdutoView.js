@@ -1,11 +1,9 @@
 export class ListaProdutoView {
     constructor() {
-        this.tabela = document.getElementById("tbody");
+        this.tabela = document.querySelector("tbody");
     }
     montaTabela(arrayProdutos) {
-        let array = Array.from(arrayProdutos);
-        array.forEach((produto) => {
-            console.log(produto);
+        arrayProdutos.forEach((produto) => {
             this.tabela.appendChild(this.montaTr(produto));
         });
     }
@@ -37,5 +35,16 @@ export class ListaProdutoView {
         tr.appendChild(valorMenorTd);
         tr.appendChild(dataAtualizacaoTd);
         return tr;
+    }
+    filtraTabela(lista, valor) {
+        var listaFiltrada = [];
+        lista.then((lista) => {
+            listaFiltrada = lista.filter((valorTest) => {
+                let nome = valorTest.nome;
+                return nome.includes(valor);
+            });
+            this.tabela.innerHTML = ``;
+            this.montaTabela(listaFiltrada);
+        });
     }
 }
