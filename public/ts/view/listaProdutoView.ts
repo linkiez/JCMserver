@@ -62,13 +62,5 @@ export class ListaProdutoView {
       this.montaTabela(listaFiltrada);
     });
 
-    /*
-    if (valor != "") {
-      listaFiltrada.filter((valorTest: any) => {
-        return true;
-      });
-      console.log(listaFiltrada);
-      console.log(valor);
-    }*/
   }
 }
