@@ -5,14 +5,18 @@ export class ListaProdutoController {
         this.listaProduto = new ListaProduto();
         this.listaProdutoView = new ListaProdutoView();
         this.inputBusca = document.querySelector("#inputBusca");
+        this.tabela = document.querySelector("tbody");
         console.log("ListaProdutoController carregado.");
-    }
-    atualizaProduto() {
     }
     async init() {
         this.listaProdutoView.montaTabela(await this.listaProduto.getProdutos());
         this.inputBusca.addEventListener("input", () => {
             this.listaProdutoView.filtraTabela(this.listaProduto.getProdutos(), this.inputBusca.value);
+        });
+        this.tabela.addEventListener("click", (event) => {
+            let td = event.target;
+            let tr = td.parentNode;
+            window.location.href = "./produto.html?id=" + tr.getAttribute("id");
         });
     }
 }
