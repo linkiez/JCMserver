@@ -94,5 +94,4 @@ class Orcamento{
 
 module.exports = new Orcamento
 
-//This is a method to convert an array of objects into an array of values: https://stackoverflow.com/questions/34965434/inserting-multiple-rows-from-json-structure-to-mysql
 
