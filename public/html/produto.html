@@ -12,7 +12,7 @@
       integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
       crossorigin="anonymous"
     />
-    <link href="../css/index.css" rel="stylesheet" />
+    <link href="../css/produto.css" rel="stylesheet" />
 
     <title>Produto</title>
   </head>
@@ -22,10 +22,10 @@
       <h2>Produto</h2>
       <div id="divMensagem" class="alert"></div>
       <hr />
-      <form>
-        <label>Código:</label>
+      <form id="form1">
+        <label for="idProduto">Código:</label>
         <input type="text" name="idProduto" id="idProduto" disabled />
-        <label>Nome:</label>
+        <label for="nomeProduto">Nome:</label>
         <input
           name="nomeProduto"
           type="text"
@@ -33,30 +33,32 @@
           placeholder="Nome"
           required
         />
-        <label>Categoria:</label>
-        <select name="categoriaProduto" id="categoriaProduto">
+        <label for="categoriaProduto">Categoria:</label>
+        <select name="categoriaProduto" id="categoriaProduto" required>
           <option value=""></option>
           <option value="Chapa">Chapa</option>
           <option value="Barra">Barra</option>
           <option value="Peça">Peça</option>
-        </select>
+        </select><br>
         <label>Espessura: </label>
         <input
           type="number"
           name="espessuraProduto"
           id="espessuraProduto"
           placeholder="mm"
+          required
         />
-        <label>Peso M²/Linear/Peça:</label>
+        <label for="pesoProduto">Peso M²/Linear/Peça:</label>
         <input
           type="number"
           name="pesoProduto"
           id="pesoProduto"
           placeholder="kg"
-        />
-        <label>Data Criação:</label>
+          required
+        /><br>
+        <label for="criacaoProduto">Data Criação:</label>
         <input type="text" name="criacaoProduto" id="criacaoProduto" disabled />
-        <label>Última alteração:</label>
+        <label for="alteracaoProduto">Última alteração:</label>
         <input
           type="text"
           name="alteracaoProduto"
@@ -68,7 +70,7 @@
       <button name="btExcluir" id="btExcluir" class="btn btn-outline-danger">
         Excluir
       </button>
-      <button name="btSalvar" id="btSalvar" class="btn btn-outline-success">
+      <button name="btSalvar" id="btSalvar" class="btn btn-outline-success" type='submit' form="form1">
         Salvar
       </button>
       <a href="./listaProdutos.html"

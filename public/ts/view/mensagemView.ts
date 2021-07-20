@@ -1,4 +1,4 @@
-export class ProdutoView {
+export class MensagemView {
   private divMensagem: HTMLDivElement;
 
   constructor() {

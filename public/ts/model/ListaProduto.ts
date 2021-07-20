@@ -7,10 +7,6 @@ export class ListaProduto {
     this.produtos = ListaProdutoService.getListaProduto();
   }
 
-  addProduto(produto: Produto) {
-    //this.produtos.push(produto);
-  }
-
   getProdutos() {
     return this.produtos;
   }

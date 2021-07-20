@@ -15,7 +15,6 @@ module.exports = app => {
 
     app.post('/fornecedor', (req, res) => {
         const fornecedor = req.body
-        console.log(produto)
         Fornecedor.adiciona(fornecedor, res)
 
     })

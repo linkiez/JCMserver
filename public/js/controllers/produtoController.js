@@ -1,7 +1,7 @@
-import { ProdutoView } from "../view/produtoView.js";
+import { MensagemView } from "../view/mensagemView.js";
 export class ProdutoController {
     constructor() {
-        this.produtoView = new ProdutoView();
+        this.mensagemView = new MensagemView();
         this.queryString = window.location.search;
         this.urlParams = new URLSearchParams(this.queryString);
         this.urlId = this.urlParams.get("id");
@@ -16,7 +16,10 @@ export class ProdutoController {
         this.inputDAlteracao = document.querySelector("#alteracaoProduto");
     }
     init() {
-        this.btSalvar.addEventListener("click", () => this.salvar());
+        document.querySelector('#form1').addEventListener("submit", (event) => {
+            event.preventDefault();
+            this.salvar();
+        });
         this.btExcluir.addEventListener("click", () => this.excluir());
         this.abrir(this.urlId);
     }
@@ -38,12 +41,12 @@ export class ProdutoController {
             let response = await fetch("/produto", option);
             let result = await response.json();
             if (response.ok) {
-                this.produtoView.mensagemSucesso("Produto criado.");
+                this.mensagemView.mensagemSucesso("Produto criado.");
                 this.inputId.value = result.insertId;
                 window.location.href = "./listaProdutos.html";
             }
             else {
-                this.produtoView.mensagemErro(response.status +
+                this.mensagemView.mensagemErro(response.status +
                     " - " +
                     response.statusText +
                     "\n - " +
@@ -60,10 +63,10 @@ export class ProdutoController {
             let response = await fetch("/produto/" + produto.id, option);
             let result = await response.json();
             if (response.ok) {
-                this.produtoView.mensagemSucesso("Produto alterado.");
+                this.mensagemView.mensagemSucesso("Produto alterado.");
             }
             else {
-                this.produtoView.mensagemErro(response.status +
+                this.mensagemView.mensagemErro(response.status +
                     " - " +
                     response.statusText +
                     "\n - " +
@@ -123,7 +126,7 @@ export class ProdutoController {
             this.inputDAlteracao.value = alteracaoProduto;
         }
         else {
-            this.produtoView.mensagemErro(response.status + " - " + response.statusText + "\n - " + result.mensagem);
+            this.mensagemView.mensagemErro(response.status + " - " + response.statusText + "\n - " + result.mensagem);
         }
     }
     async excluir() {
@@ -138,12 +141,12 @@ export class ProdutoController {
             console.log("DELETE:");
             console.log(result);
             if (response.ok) {
-                this.produtoView.mensagemSucesso("Produto excluido.");
+                this.mensagemView.mensagemSucesso("Produto excluido.");
                 document.querySelector("form").reset();
                 window.location.href = "./listaProdutos.html";
             }
             else {
-                this.produtoView.mensagemErro(response.status +
+                this.mensagemView.mensagemErro(response.status +
                     " - " +
                     response.statusText +
                     "\n - " +
@@ -151,7 +154,7 @@ export class ProdutoController {
             }
         }
         else {
-            this.produtoView.mensagemErro("Código em branco.");
+            this.mensagemView.mensagemErro("Código em branco.");
         }
     }
 }

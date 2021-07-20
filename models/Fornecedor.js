@@ -23,14 +23,16 @@ class Fornecedor {
         } else {
             const dataCriacao = moment().format('YYYY-MM-DD HH:mm:ss')
 
-            const fornecedorDatado = {...produto, dataCriacao}
+            const fornecedorDatado = {...fornecedor, dataCriacao}
             const sql = 'INSERT INTO FORNECEDORES SET ?'
      
             conexao.query(sql, fornecedorDatado, (erro, resultado) => {
                 if(erro){
                     res.status(400).json(erro)
+                    console.log(erro);
                 }else{
                     res.status(201).json(resultado) //retorna com id para uso
+                    console.log(resultado);
                 }
             })
         }

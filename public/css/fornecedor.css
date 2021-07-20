@@ -1,0 +1,18 @@
+form input {
+  margin: 0.5em;
+}
+
+textarea {
+    margin-left: 0.5em;
+    margin-top: 0.5em;
+}
+
+#labelDescricao {
+  vertical-align: top;
+  margin-top: 0.5em;
+}
+
+#inputDescricao {
+  width: 500px;
+  height: 100px;
+}

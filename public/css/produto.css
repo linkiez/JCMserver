@@ -1,0 +1,15 @@
+form input {
+    margin: 0.5em;
+}
+
+#idProduto {
+    width: 75px;
+}
+
+#espessuraProduto{
+    width: 75px;
+}
+
+#pesoProduto {
+    width: 75px;
+}
