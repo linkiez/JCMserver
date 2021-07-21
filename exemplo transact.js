@@ -59,7 +59,6 @@ async function createOrder() {
   process.exit(0);
 })();
 
-
 /*NodeJs mysql has very well transaction management but not exactly similar to Spring. But concept is similar -
 
 Create db connection
@@ -73,53 +72,57 @@ if all goes well use commit
 close the connection use end
 An example -*/
 
-const mysql = require('mysql');
- 
-const connection = mysql.createConnection(
-    {
-      host     : 'YOUR_HOST',
-      user     : 'YOUR_USERNAME',
-      password : 'YOUR_PASSWORD',
-      database : 'YOUR_DB_NAME'
-    }
-);
- 
-connection.connect(function(err) {
+const mysql = require("mysql");
+
+const connection = mysql.createConnection({
+  host: "YOUR_HOST",
+  user: "YOUR_USERNAME",
+  password: "YOUR_PASSWORD",
+  database: "YOUR_DB_NAME",
+});
+
+connection.connect(function (err) {
   if (err) {
-    console.error('error connecting: ' + err.stack);
+    console.error("error connecting: " + err.stack);
     return;
   }
-  console.log('connected as id ' + connection.threadId);
+  console.log("connected as id " + connection.threadId);
 });
- 
+
 /* Begin transaction */
-connection.beginTransaction(function(err) {
-  if (err) { throw err; }
-  connection.query('YOUR QUERY', "PLACE HOLDER VALUES", function(err, result) {
-    if (err) { 
-      connection.rollback(function() {
+connection.beginTransaction(function (err) {
+  if (err) {
+    throw err;
+  }
+  connection.query("YOUR QUERY", "PLACE HOLDER VALUES", function (err, result) {
+    if (err) {
+      connection.rollback(function () {
         throw err;
       });
     }
- 
+
     const log = result.insertId;
- 
-    connection.query('ANOTHER QUERY PART OF TRANSACTION', log, function(err, result) {
-      if (err) { 
-        connection.rollback(function() {
-          throw err;
-        });
-      }  
-      connection.commit(function(err) {
-        if (err) { 
-          connection.rollback(function() {
+
+    connection.query(
+      "ANOTHER QUERY PART OF TRANSACTION",
+      log,
+      function (err, result) {
+        if (err) {
+          connection.rollback(function () {
             throw err;
           });
         }
-        console.log('Transaction Completed Successfully.');
-        connection.end();
-      });
-    });
+        connection.commit(function (err) {
+          if (err) {
+            connection.rollback(function () {
+              throw err;
+            });
+          }
+          console.log("Transaction Completed Successfully.");
+          connection.end();
+        });
+      }
+    );
   });
 });
 /* End transaction */

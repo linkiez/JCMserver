@@ -1,5 +1,5 @@
 
-const Fornecedor = require('../models/PedidoCompras.js')
+const PedidoCompras = require('../models/PedidoCompras.js')
 
 module.exports = app => {
     app.get('/pedidocompras', (req, res) => {
@@ -15,7 +15,7 @@ module.exports = app => {
 
     app.post('/pedidocompras', (req, res) => {
         const pedidocompra = req.body
-        PedidoCompras.adiciona(pedidocompras, res)
+        PedidoCompras.adiciona(pedidocompra, res)
 
     })
 
