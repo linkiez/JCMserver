@@ -1,9 +1,13 @@
-import { ListaProdutoService } from "../service/listaProdutoService.js";
 export class ListaProduto {
     constructor() {
-        this.produtos = ListaProdutoService.getListaProduto();
+        this.produtos = this.getListaProduto();
     }
     getProdutos() {
         return this.produtos;
+    }
+    async getListaProduto() {
+        const response = await fetch("/produto");
+        const data = await response.json();
+        return data;
     }
 }

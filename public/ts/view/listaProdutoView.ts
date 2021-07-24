@@ -1,5 +1,4 @@
 import { Produto } from "../model/Produto.js";
-import { ListaProduto } from "../model/ListaProduto.js";
 
 export class ListaProdutoView {
   private tabela: HTMLTableSectionElement;
