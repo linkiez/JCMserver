@@ -114,7 +114,6 @@ export class Fornecedor {
             if (response.ok) {
                 this.mensagemView.mensagemSucesso("Fornecedor criado.");
                 this.inputId.value = result.insertId;
-                //window.location.href = "./listaProdutos.html";
             }
             else {
                 this.mensagemView.mensagemErro(response.status +
@@ -160,7 +159,6 @@ export class Fornecedor {
             if (response.ok) {
                 this.mensagemView.mensagemSucesso("Produto excluido.");
                 document.querySelector("form").reset();
-                //window.location.href = "./listaProdutos.html";
             }
             else {
                 this.mensagemView.mensagemErro(response.status +

@@ -1,11 +1,12 @@
 form input {
-  margin: 0.5em;
+  margin: 0.1em;
 }
 
 textarea {
-    margin-left: 0.5em;
-    margin-top: 0.5em;
+  width: 100%; 
+  max-width: 100%;
 }
+
 
 #labelDescricao {
   vertical-align: top;

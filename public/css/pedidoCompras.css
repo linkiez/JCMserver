@@ -1,0 +1,37 @@
+form input {
+  margin: 0.1em;
+}
+
+textarea {
+  margin-left: 0.5em;
+  margin-top: 0.5em;
+}
+
+form label {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+form table tfoot {
+  font-size: 0.8em;
+  text-align: right;
+  font-weight: bold;
+}
+
+form table tfoot td:first-child {
+  text-align: left;
+}
+
+form table tfoot input {
+  width: 100%;
+}
+
+#labelDescricao {
+  vertical-align: top;
+  margin-top: 0.5em;
+}
+
+#inputDescricao {
+  width: 500px;
+  height: 100px;
+}
