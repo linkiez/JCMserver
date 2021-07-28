@@ -9,7 +9,6 @@ export class PedidoComprasView {
     async montaTr(itens) {
         let tr = document.createElement("tr");
         let linha = this.tabela.querySelectorAll("tr").length;
-        linha++;
         tr.setAttribute("class", String(linha));
         let itemTd = document.createElement("td");
         let descricaoTd = document.createElement("td");
@@ -49,26 +48,22 @@ export class PedidoComprasView {
         dimensaoTd.appendChild(divDimensao);
         let inputQuantidade = document.createElement("input");
         inputQuantidade.setAttribute("class", "inputQuantidade col-12");
-        inputQuantidade.setAttribute("Placeholder", "0,00");
         quantidadeTd.appendChild(inputQuantidade);
         let inputPeso = document.createElement("input");
         inputPeso.setAttribute("class", "inputPeso col-12");
-        inputPeso.setAttribute("Placeholder", "0,00");
         pesoTd.appendChild(inputPeso);
         let inputPrecoUnitario = document.createElement("input");
         inputPrecoUnitario.setAttribute("class", "inputPrecoUnitario col-12");
-        inputPrecoUnitario.setAttribute("Placeholder", "0,00");
         precoUnitarioTd.appendChild(inputPrecoUnitario);
         let spanPrecoTotalLinha = document.createElement("span");
         spanPrecoTotalLinha.setAttribute("class", "spanPrecoTotalLinha");
         precoTotalLinhaTd.appendChild(spanPrecoTotalLinha);
         let inputIpi = document.createElement("input");
         inputIpi.setAttribute("class", "inputIpi col-12");
-        inputIpi.setAttribute("Placeholder", "0,00");
         ipiTd.appendChild(inputIpi);
         let inputDataEntrega = document.createElement("input");
         inputDataEntrega.setAttribute("class", "inputDataEntrega col-12");
-        inputDataEntrega.setAttribute("type", "date");
+        inputDataEntrega.setAttribute("type", "Date");
         dataEntregaTd.appendChild(inputDataEntrega);
         let btExcluirLinha = document.createElement("button");
         btExcluirLinha.setAttribute("class", "btExcluirLinha btn btn-outline-danger");
@@ -79,19 +74,12 @@ export class PedidoComprasView {
             inputMaterialId.value = itens.material;
             inputMaterial.value = fetchedMaterial.nome;
             inputDimensao.value = itens.dimensao;
-            inputQuantidade.value = String(itens.quantidade).replace(".", ",");
-            inputPeso.value = String(itens.peso).replace(".", ",");
-            inputPrecoUnitario.value = String(itens.preco).replace(".", ",");
+            inputQuantidade.value = itens.quantidade;
+            inputPeso.value = itens.peso;
+            inputPrecoUnitario.value = itens.preco;
             inputIpi.value = itens.ipi;
             let data = new Date(itens.prazo);
             inputDataEntrega.value = String(data.getFullYear() + "-" + data.getMonth() + "-" + data.getDate());
-            let peso = Number(inputPeso.value.replace(",", "."));
-            let precoUnitario = Number(inputPrecoUnitario.value.replace(",", "."));
-            let total = peso * precoUnitario;
-            spanPrecoTotalLinha.innerHTML = `${total.toLocaleString("pt-br", {
-                style: "currency",
-                currency: "BRL",
-            })}`;
         }
         tr.appendChild(itemTd);
         tr.appendChild(descricaoTd);
@@ -104,7 +92,7 @@ export class PedidoComprasView {
         tr.appendChild(dataEntregaTd);
         tr.appendChild(excluirTd);
         let listaProduto = new ListaProduto();
-        Autocomplete.autocompleteMaterial(inputMaterial, inputMaterialId, await listaProduto.getListaProduto());
+        this.autocompleteMaterial(inputMaterial, inputMaterialId, await listaProduto.getListaProduto());
         Autocomplete.autocomplete(inputDimensao, [
             "1000x2000mm",
             "1000x3000mm",
@@ -122,39 +110,92 @@ export class PedidoComprasView {
             "DIVERSAS MEDIDAS",
         ]);
         this.excluirLinha(btExcluirLinha);
-        let inputs = [
-            inputMaterial,
-            inputDimensao,
-            inputQuantidade,
-            inputPeso,
-            inputPrecoUnitario,
-        ];
-        inputs.forEach((item) => {
-            item.addEventListener("input", (event) => {
-                if (inputMaterial &&
-                    inputDimensao &&
-                    inputQuantidade &&
-                    inputPeso &&
-                    inputPrecoUnitario) {
-                    let peso = Number(inputPeso.value.replace(",", "."));
-                    let precoUnitario = Number(inputPrecoUnitario.value.replace(",", "."));
-                    let total = peso * precoUnitario;
-                    spanPrecoTotalLinha.innerHTML = `${total.toLocaleString("pt-br", {
-                        style: "currency",
-                        currency: "BRL",
-                    })}`;
-                }
-            });
-        });
         return tr;
-    }
-    montaTabela(itens) {
-        itens.forEach(async (item) => {
-            this.tabela.appendChild(await this.montaTr(item));
-        });
     }
     async novaLinha() {
         this.tabela.appendChild(await this.montaTr());
+    }
+    autocompleteMaterial(inp, inpId, arr) {
+        var currentFocus;
+        inp.addEventListener("input", function (e) {
+            var a, b, i, val = this.value;
+            closeAllLists();
+            if (!val) {
+                return false;
+            }
+            currentFocus = -1;
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            this.parentNode.appendChild(a);
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i].nome.substr(0, val.length).toUpperCase() ==
+                    val.toUpperCase() ||
+                    arr[i].nome.includes(val)) {
+                    b = document.createElement("DIV");
+                    b.innerHTML =
+                        "<strong>" + arr[i].nome.substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].nome.substr(val.length);
+                    b.innerHTML += `
+            <input type='hidden' value='${arr[i].id}'>
+            <input type='hidden' value='${arr[i].nome}'>
+            `;
+                    b.addEventListener("click", function (e) {
+                        inpId.value = this.getElementsByTagName("input")[0].value;
+                        inp.value = this.getElementsByTagName("input")[1].value;
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                }
+            }
+        });
+        inp.addEventListener("keydown", function (e) {
+            var x;
+            x = document.getElementById(this.id + "autocomplete-list");
+            if (x)
+                x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
+                currentFocus++;
+                addActive(x);
+            }
+            else if (e.keyCode == 38) {
+                currentFocus--;
+                addActive(x);
+            }
+            else if (e.keyCode == 13) {
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    if (x)
+                        x[currentFocus].click();
+                }
+            }
+        });
+        function addActive(x) {
+            if (!x)
+                return false;
+            removeActive(x);
+            if (currentFocus >= x.length)
+                currentFocus = 0;
+            if (currentFocus < 0)
+                currentFocus = x.length - 1;
+            x[currentFocus].classList.add("autocomplete-active");
+        }
+        function removeActive(x) {
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+            }
+        }
+        function closeAllLists(elmnt) {
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
+        }
+        document.addEventListener("click", function (e) {
+            closeAllLists(e.target);
+        });
     }
     excluirLinha(botao) {
         botao.addEventListener("click", (event) => {
@@ -163,12 +204,6 @@ export class PedidoComprasView {
             let td = button.parentNode;
             let tr = td.parentNode;
             tr.remove();
-        });
-    }
-    calculaTotais() {
-        this.tabela.addEventListener("change", (event) => {
-            let pesos = this.tabela.querySelectorAll(".inputPeso");
-            console.log(pesos.length);
         });
     }
 }

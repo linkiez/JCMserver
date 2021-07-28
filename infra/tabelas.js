@@ -35,7 +35,7 @@ class Tabelas {
 
   criarPedidoCompras() {
     const sql =
-      "CREATE TABLE IF NOT EXISTS PEDIDO_COMPRAS (id int NOT NULL AUTO_INCREMENT, fornecedor_id int NOT NULL, dataCriacao date, cond_pagamento varchar(255), frete decimal(15,2), transporte varchar(255), PRIMARY KEY(id), FOREIGN KEY(fornecedor_id) REFERENCES FORNECEDORES(id))";
+      "CREATE TABLE IF NOT EXISTS PEDIDO_COMPRAS (id int NOT NULL AUTO_INCREMENT, fornecedor_id int NOT NULL, dataCriacao date, cond_pagamento varchar(255), frete decimal(15,2), transporte varchar(255), pedido varchar(255), PRIMARY KEY(id), FOREIGN KEY(fornecedor_id) REFERENCES FORNECEDORES(id))";
 
     const sql2 =
       "CREATE TABLE IF NOT EXISTS PEDIDO_COMPRA_ITENS (id int NOT NULL AUTO_INCREMENT, pedido_compras int NOT NULL, material int, dimensao varchar(255), quantidade float DEFAULT '0', peso float DEFAULT '0', preco decimal(15,2) DEFAULT '0,00', ipi decimal(5,2) DEFAULT '0,00', prazo date, PRIMARY KEY(id), FOREIGN KEY(pedido_compras) REFERENCES PEDIDO_COMPRAS(id) ON DELETE CASCADE, FOREIGN KEY(material) REFERENCES PRODUTOS(id))";

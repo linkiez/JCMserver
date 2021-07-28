@@ -4,9 +4,8 @@
     "outDir": "public/js",
     "noEmitOnError": true,
     "noImplicitAny": true,
-    //"removeComments": true,
+    "removeComments": true,
     "module": "ES2020",
-    "allowJs": true
   },
   "include": ["public/ts/**/*", "public/js/helpers"],
   "exclude": []

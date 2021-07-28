@@ -8,11 +8,11 @@ export class Produto {
   private _dataAtualizacao?: Date;
 
   constructor(
-    id: number,
-    nome: string,
-    categoria: string,
-    espessura: number,
-    peso: number,
+    id?: number,
+    nome?: string,
+    categoria?: string,
+    espessura?: number,
+    peso?: number,
     dataCriacao?: Date,
     dataAtualizacao?: Date
   ) {
@@ -58,5 +58,11 @@ export class Produto {
   get dataAtualizacao() {
     let dataAtualizacaoDummy = this._dataAtualizacao;
     return dataAtualizacaoDummy;
+  }
+
+  async fetchProduto(id: number){
+    const response = await fetch("/produto/"+id);
+    const data = await response.json();
+    return data;
   }
 }

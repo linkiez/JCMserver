@@ -12,6 +12,11 @@ form label {
   font-weight: bold;
 }
 
+form span {
+  font-size: 1em;
+  font-weight: normal;
+}
+
 form table tfoot {
   font-size: 0.8em;
   text-align: right;

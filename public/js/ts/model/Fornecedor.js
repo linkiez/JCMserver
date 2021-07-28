@@ -172,9 +172,4 @@ export class Fornecedor {
             this.mensagemView.mensagemErro("Código em branco.");
         }
     }
-    async fetchFornecedor(id) {
-        const response = await fetch("/fornecedor/" + id);
-        const data = await response.json();
-        return data;
-    }
 }

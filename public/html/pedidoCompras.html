@@ -24,7 +24,7 @@
       <div id="divMensagem" class="alert"></div>
       <hr />
       <form id="form1" method="post" class="row">
-        <label for="inputId" class="col-2"
+        <label for="inputId" class="col-1"
           >Código:
           <input
             type="text"
@@ -33,9 +33,18 @@
             disabled
             class="col-12"
         /></label>
+        <label for="inputPedido" class="col-1"
+          >Pedido:
+          <input
+            type="text"
+            id="inputPedido"
+            name="inputPedido"
+            disabled
+            class="col-12"
+        /></label>
 
         <input type="hidden" id="inputFornecedorId" name="inputFornecedorId" />
-        
+
         <div class="autocomplete col-5">
           <label for="inputNome" class="col-12"
             >Nome:
@@ -43,7 +52,7 @@
           /></label>
         </div>
 
-        <label for="inputContato" class="col-5"
+        <label for="spanContato" class="col-5"
           >Contato:
           <span id="spanContato" name="spanContato" class="col-12"></span
         ></label>
@@ -85,14 +94,9 @@
           <span id="spanIeRg" name="spanIeRg" class="col-12"></span
         ></label>
 
-        <label for="spanDCriacao" class="col-3"
+        <label for="spanDCriacao" class="col-6"
           >Data criação:
           <span id="spanDCriacao" name="spanDCriacao" class="col-12"></span
-        ></label>
-
-        <label for="spanDAlteracao" class="col-3"
-          >Última alteração:
-          <span id="spanDAlteracao" name="spanDAlteracao" class="col-12"></span
         ></label>
 
         <table class="table table-hover">
@@ -130,7 +134,13 @@
             <tr>
               <td>Cond. Pagamento:</td>
               <td>
-                <input type="text" id="inputPagamento" name="inputPagamento" />
+                <div class="autocomplete">
+                  <input
+                    type="text"
+                    id="inputPagamento"
+                    name="inputPagamento"
+                  />
+                </div>
               </td>
               <td colspan="4"></td>
               <td colspan="2">Valor Total IPI:</td>
