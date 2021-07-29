@@ -111,7 +111,6 @@ export class PedidoCompras {
         this.inputPagamento.value = result.cond_pagamento;
         this.selectTransporte.value = result.transporte;
         this.inputFrete.value = result.frete;
-
       } else {
         this.mensagemView.mensagemErro(
           response.status +
@@ -124,7 +123,132 @@ export class PedidoCompras {
     }
   }
 
-  salvar() {}
+  async salvar() {
+    var pedido: any = {
+      id: this.inputId.value,
+      fornecedor_id: this.inputFornecedorId.value,
+      cond_pagamento: this.inputPagamento.value,
+      frete: this.inputFrete.value,
+      transporte: this.selectTransporte.value,
+      pedido: this.inputPedido.value,
+    };
 
-  excluir() {}
+    let materiaisID: NodeListOf<HTMLInputElement> =
+      document.querySelectorAll(".inputMaterialId");
+    let dimensoes: NodeListOf<HTMLInputElement> =
+      document.querySelectorAll(".inputDimensao");
+    let quantidades: NodeListOf<HTMLInputElement> =
+      document.querySelectorAll(".inputQuantidade");
+    let pesos: NodeListOf<HTMLInputElement> =
+      document.querySelectorAll(".inputPeso");
+    let precoUnitarios: NodeListOf<HTMLInputElement> =
+      document.querySelectorAll(".inputPrecoUnitario");
+    let ipis: NodeListOf<HTMLInputElement> =
+      document.querySelectorAll(".inputIpi");
+    let datasEntregas: NodeListOf<HTMLInputElement> =
+      document.querySelectorAll(".inputDataEntrega");
+
+    let itens = [];
+
+    for (let i = 0; i < materiaisID.length; i++) {
+      let item = {
+        pedido_compras: pedido.id,
+        material: materiaisID[i].value,
+        dimensao: dimensoes[i].value,
+        quantidade: quantidades[i].value.replace(",", "."),
+        peso: pesos[i].value.replace(",", "."),
+        preco: precoUnitarios[i].value.replace(",", "."),
+        ipi: ipis[i].value,
+        prazo: datasEntregas[i].value,
+      };
+
+      itens.push(item);
+    }
+
+    pedido.itens = itens;
+
+    console.log(pedido);
+
+    if (this.inputId.value == "") {
+      delete pedido.id;
+      const option = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(pedido),
+      };
+
+      let response = await fetch("/pedidocompras/", option);
+      let result = await response.json();
+
+      if (response.ok) {
+        this.mensagemView.mensagemSucesso("Pedido de compras criado.");
+        this.inputId.value = result.insertId;
+        //window.location.href = "./listaProdutos.html";
+      } else {
+        this.mensagemView.mensagemErro(
+          response.status +
+            " - " +
+            response.statusText +
+            "\n - " +
+            result[0].mensagem
+        );
+      }
+    } else {
+      const option = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(pedido),
+      };
+      console.log(option);
+
+      let response = await fetch("/pedidocompras/" + pedido.id, option);
+      let result = await response.json();
+
+      if (response.ok) {
+        this.mensagemView.mensagemSucesso("Pedido de compras alterado.");
+      } else {
+        this.mensagemView.mensagemErro(
+          response.status +
+            " - " +
+            response.statusText +
+            "\n - " +
+            JSON.stringify(result)
+        );
+      }
+
+      console.log(result);
+    }
+  }
+
+  async excluir() {
+    let id = this.inputId.value;
+
+    const option = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    };
+
+    if (id != "") {
+      let response = await fetch("/pedidocompras/" + id, option);
+      let result = await response.json();
+      console.log("DELETE:");
+      console.log(result);
+
+      if (response.ok) {
+        this.mensagemView.mensagemSucesso("Pedido de compras excluido.");
+        document.querySelector("form").reset();
+        //window.location.href = "./listaProdutos.html";
+      } else {
+        this.mensagemView.mensagemErro(
+          response.status +
+            " - " +
+            response.statusText +
+            "\n - " +
+            result.mensagem
+        );
+      }
+    } else {
+      this.mensagemView.mensagemErro("Código em branco.");
+    }
+  }
 }

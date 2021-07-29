@@ -201,7 +201,7 @@ export class Fornecedor {
       console.log(result);
 
       if (response.ok) {
-        this.mensagemView.mensagemSucesso("Produto excluido.");
+        this.mensagemView.mensagemSucesso("Fornecedor excluido.");
         document.querySelector("form").reset();
         //window.location.href = "./listaProdutos.html";
       } else {

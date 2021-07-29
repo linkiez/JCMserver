@@ -34,6 +34,7 @@ export class PedidoComprasView {
         itemTd.innerHTML = String(linha);
         let inputMaterialId = document.createElement("input");
         inputMaterialId.setAttribute("type", "hidden");
+        inputMaterialId.setAttribute("class", "inputMaterialId");
         let inputMaterial = document.createElement("input");
         inputMaterial.setAttribute("class", "inputMaterial col-12");
         let divMaterial = document.createElement("div");
@@ -84,7 +85,11 @@ export class PedidoComprasView {
             inputPrecoUnitario.value = String(itens.preco).replace(".", ",");
             inputIpi.value = itens.ipi;
             let data = new Date(itens.prazo);
-            inputDataEntrega.value = String(data.getFullYear() + "-" + data.getMonth() + "-" + data.getDate());
+            inputDataEntrega.value = String(data.getFullYear() +
+                "-" +
+                String("0" + data.getMonth()).slice(-2) +
+                "-" +
+                String("0" + data.getDate()).slice(-2));
             let peso = Number(inputPeso.value.replace(",", "."));
             let precoUnitario = Number(inputPrecoUnitario.value.replace(",", "."));
             let total = peso * precoUnitario;
@@ -151,6 +156,7 @@ export class PedidoComprasView {
     montaTabela(itens) {
         itens.forEach(async (item) => {
             this.tabela.appendChild(await this.montaTr(item));
+            this.calculaTotais();
         });
     }
     async novaLinha() {
@@ -166,9 +172,43 @@ export class PedidoComprasView {
         });
     }
     calculaTotais() {
-        this.tabela.addEventListener("change", (event) => {
-            let pesos = this.tabela.querySelectorAll(".inputPeso");
-            console.log(pesos.length);
-        });
+        let pesos = this.tabela.querySelectorAll(".inputPeso");
+        let precos = this.tabela.querySelectorAll(".inputPrecoUnitario");
+        let ipis = this.tabela.querySelectorAll(".inputIpi");
+        let total = 0;
+        let totalIpis = 0;
+        for (let i = 0; i < pesos.length; i++) {
+            total +=
+                Number(pesos[i].value.replace(",", ".")) *
+                    Number(precos[i].value.replace(",", "."));
+            totalIpis +=
+                Number(pesos[i].value.replace(",", ".")) *
+                    Number(precos[i].value.replace(",", ".")) *
+                    (Number(ipis[i].value.replace(",", ".")) / 100);
+        }
+        let spanValorTotal = document.querySelector("#spanValorTotal");
+        spanValorTotal.innerHTML = `${total.toLocaleString("pt-br", {
+            style: "currency",
+            currency: "BRL",
+        })}`;
+        let spanValorTotalIPI = document.querySelector("#spanValorTotalIPI");
+        spanValorTotalIPI.innerHTML = `${totalIpis.toLocaleString("pt-br", {
+            style: "currency",
+            currency: "BRL",
+        })}`;
+        let spanValorTotalComIPI = document.querySelector("#spanValorTotalComIPI");
+        let valorComIpis = total + totalIpis;
+        spanValorTotalComIPI.innerHTML = `${valorComIpis.toLocaleString("pt-br", {
+            style: "currency",
+            currency: "BRL",
+        })}`;
+        let inputFrete = document.querySelector("#inputFrete");
+        let spanTotalFinal = document.querySelector("#spanTotalFinal");
+        let frete = Number(inputFrete.value);
+        let freteTotal = frete + total + totalIpis;
+        spanTotalFinal.innerHTML = `${freteTotal.toLocaleString("pt-br", {
+            style: "currency",
+            currency: "BRL",
+        })}`;
     }
 }

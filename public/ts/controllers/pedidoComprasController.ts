@@ -11,6 +11,7 @@ export class PedidoComprasController {
   private btNovaLinha: HTMLButtonElement;
   private inputFornecedor: HTMLInputElement;
   private inputPagamento: HTMLInputElement;
+  private btExcluir: HTMLButtonElement;
 
   constructor() {
     this.pedidoComprasView = new PedidoComprasView();
@@ -20,9 +21,11 @@ export class PedidoComprasController {
     this.btNovaLinha = document.querySelector("#btNovaLinha");
     this.inputFornecedor = document.querySelector("#inputNome");
     this.inputPagamento = document.querySelector("#inputPagamento");
+    this.btExcluir = document.querySelector("#btExcluir")
   }
 
   async init() {
+
     this.btNovaLinha.addEventListener("click", (event) => {
       event.preventDefault();
       this.pedidoComprasView.novaLinha();
@@ -51,7 +54,15 @@ export class PedidoComprasController {
 
     this.pedidoCompras.abrir();
 
-    this.pedidoComprasView.calculaTotais();
+    document.addEventListener("input", (event) => {
+      this.pedidoComprasView.calculaTotais()
+    })
+
+    document.querySelector('#form1').addEventListener("submit", (event) => {
+      event.preventDefault();
+      this.pedidoCompras.salvar()});
+
+      this.btExcluir.addEventListener("click", () => this.pedidoCompras.excluir());  
   }
 }
 

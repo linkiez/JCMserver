@@ -10,6 +10,7 @@ export class PedidoComprasController {
         this.btNovaLinha = document.querySelector("#btNovaLinha");
         this.inputFornecedor = document.querySelector("#inputNome");
         this.inputPagamento = document.querySelector("#inputPagamento");
+        this.btExcluir = document.querySelector("#btExcluir");
     }
     async init() {
         this.btNovaLinha.addEventListener("click", (event) => {
@@ -33,7 +34,14 @@ export class PedidoComprasController {
             "Cheques Terceiro",
         ]);
         this.pedidoCompras.abrir();
-        this.pedidoComprasView.calculaTotais();
+        document.addEventListener("input", (event) => {
+            this.pedidoComprasView.calculaTotais();
+        });
+        document.querySelector('#form1').addEventListener("submit", (event) => {
+            event.preventDefault();
+            this.pedidoCompras.salvar();
+        });
+        this.btExcluir.addEventListener("click", () => this.pedidoCompras.excluir());
     }
 }
 let controller = new PedidoComprasController();

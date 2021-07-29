@@ -27,10 +27,7 @@ class PedidoCompras {
 
           for (let i = 0; i < itensArray.length; i++) {
             itensArray[i].pedido_compras = insertId;
-            itensArray[i].prazo = moment(
-              itensArray[i].prazo,
-              "DD/MM/YYYY"
-            ).format("YYYY-MM-DD");
+            
           }
 
           sql = montaInsert(itensArray);
@@ -126,12 +123,7 @@ class PedidoCompras {
                   res.status(400).json(erro);
                 });
               } else {
-                for (let i = 0; i < itensArray.length; i++) {
-                  itensArray[i].prazo = moment(
-                    itensArray[i].prazo,
-                    "DD/MM/YYYY"
-                  ).format("YYYY-MM-DD");
-                }
+                
                 sql = montaInsert(itensArray);
 
                 conexao.query(sql, (erro, resultado_itens) => {

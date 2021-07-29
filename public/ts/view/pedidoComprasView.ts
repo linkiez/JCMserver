@@ -42,6 +42,7 @@ export class PedidoComprasView {
 
     let inputMaterialId = document.createElement("input");
     inputMaterialId.setAttribute("type", "hidden");
+    inputMaterialId.setAttribute("class", "inputMaterialId")
     let inputMaterial = document.createElement("input");
     inputMaterial.setAttribute("class", "inputMaterial col-12");
     let divMaterial = document.createElement("div");
@@ -108,9 +109,12 @@ export class PedidoComprasView {
 
       let data = new Date(itens.prazo);
       inputDataEntrega.value = String(
-        data.getFullYear() + "-" + data.getMonth() + "-" + data.getDate()
+        data.getFullYear() +
+          "-" +
+          String("0" + data.getMonth()).slice(-2) +
+          "-" +
+          String("0" + data.getDate()).slice(-2)
       );
-      
 
       let peso = Number(inputPeso.value.replace(",", "."));
       let precoUnitario = Number(inputPrecoUnitario.value.replace(",", "."));
@@ -195,6 +199,7 @@ export class PedidoComprasView {
   montaTabela(itens: any[]) {
     itens.forEach(async (item) => {
       this.tabela.appendChild(await this.montaTr(item));
+      this.calculaTotais();
     });
   }
 
@@ -213,10 +218,57 @@ export class PedidoComprasView {
     });
   }
 
-  calculaTotais(){
-    this.tabela.addEventListener("change", (event) => {
-      let pesos = this.tabela.querySelectorAll(".inputPeso")
-      console.log(pesos.length)
-    })
+  calculaTotais() {
+    let pesos: NodeListOf<HTMLInputElement> =
+      this.tabela.querySelectorAll(".inputPeso");
+    let precos: NodeListOf<HTMLInputElement> = this.tabela.querySelectorAll(
+      ".inputPrecoUnitario"
+    );
+    let ipis: NodeListOf<HTMLInputElement> =
+      this.tabela.querySelectorAll(".inputIpi");
+
+    let total = 0;
+    let totalIpis = 0;
+
+    for (let i = 0; i < pesos.length; i++) {
+      total +=
+        Number(pesos[i].value.replace(",", ".")) *
+        Number(precos[i].value.replace(",", "."));
+
+      totalIpis +=
+        Number(pesos[i].value.replace(",", ".")) *
+        Number(precos[i].value.replace(",", ".")) *
+        (Number(ipis[i].value.replace(",", ".")) / 100);
+    }
+
+    let spanValorTotal = document.querySelector("#spanValorTotal");
+    spanValorTotal.innerHTML = `${total.toLocaleString("pt-br", {
+      style: "currency",
+      currency: "BRL",
+    })}`;
+
+    let spanValorTotalIPI = document.querySelector("#spanValorTotalIPI");
+    spanValorTotalIPI.innerHTML = `${totalIpis.toLocaleString("pt-br", {
+      style: "currency",
+      currency: "BRL",
+    })}`;
+
+    let spanValorTotalComIPI = document.querySelector("#spanValorTotalComIPI");
+    let valorComIpis = total + totalIpis;
+    spanValorTotalComIPI.innerHTML = `${valorComIpis.toLocaleString("pt-br", {
+      style: "currency",
+      currency: "BRL",
+    })}`;
+
+    let inputFrete: HTMLInputElement = document.querySelector("#inputFrete");
+    let spanTotalFinal = document.querySelector("#spanTotalFinal");
+
+    let frete = Number(inputFrete.value);
+    let freteTotal = frete + total + totalIpis;
+
+    spanTotalFinal.innerHTML = `${freteTotal.toLocaleString("pt-br", {
+      style: "currency",
+      currency: "BRL",
+    })}`;
   }
 }

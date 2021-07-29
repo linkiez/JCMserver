@@ -24,7 +24,7 @@
       <div id="divMensagem" class="alert"></div>
       <hr />
       <form id="form1" method="post" class="row">
-        <label for="inputId" class="col-1"
+        <label for="inputId" class="col-6 col-lg-1"
           >Código:
           <input
             type="text"
@@ -33,85 +33,80 @@
             disabled
             class="col-12"
         /></label>
-        <label for="inputPedido" class="col-1"
+        <label for="inputPedido" class="col-6 col-lg-1"
           >Pedido:
-          <input
-            type="text"
-            id="inputPedido"
-            name="inputPedido"
-            disabled
-            class="col-12"
+          <input type="text" id="inputPedido" name="inputPedido" class="col-12"
         /></label>
 
         <input type="hidden" id="inputFornecedorId" name="inputFornecedorId" />
 
-        <div class="autocomplete col-5">
+        <div class="autocomplete col-12 col-lg-5">
           <label for="inputNome" class="col-12"
             >Nome:
             <input type="text" id="inputNome" name="inputNome" class="col-12"
           /></label>
         </div>
 
-        <label for="spanContato" class="col-5"
+        <label for="spanContato" class="col-12 col-lg-5"
           >Contato:
           <span id="spanContato" name="spanContato" class="col-12"></span
         ></label>
 
-        <label for="spanTelefone" class="col-6"
+        <label for="spanTelefone" class="col-12 col-lg-6"
           >Telefone:
           <span id="spanTelefone" name="spanTelefone" class="col-12"></span
         ></label>
 
-        <label for="spanEmail" class="col-6"
+        <label for="spanEmail" class="col-12 col-lg-6"
           >Email: <span id="spanEmail" name="spanEmail" class="col-12"></span
         ></label>
 
-        <label for="spanEndereco" class="col-6"
+        <label for="spanEndereco" class="col-12 col-lg-6"
           >Endereco:
           <span id="spanEndereco" name="spanEndereco" class="col-12"></span
         ></label>
 
-        <label for="spanMunicipio" class="col-2"
+        <label for="spanMunicipio" class="col-4 col-lg-2"
           >Municipio:
           <span id="spanMunicipio" name="spanMunicipio" class="col-12"></span
         ></label>
 
-        <label for="spanEstado" class="col-2"
+        <label for="spanEstado" class="col-4 col-lg-2"
           >Estado: <span id="spanEstado" name="spanEstado" class="col-12"></span
         ></label>
 
-        <label for="spanCep" class="col-2"
+        <label for="spanCep" class="col-4 col-lg-2"
           >CEP: <span id="spanCep" name="spanCep" class="col-12"></span
         ></label>
 
-        <label for="spanCnpjCpf" class="col-3"
+        <label for="spanCnpjCpf" class="col-6 col-lg-3"
           >CNPJ / CPF:
           <span id="spanCnpjCpf" name="spanCnpj" class="col-12"></span
         ></label>
 
-        <label for="spanIeRg" class="col-3"
+        <label for="spanIeRg" class="col-6 col-lg-3"
           >Inscricao estadual / RG:
           <span id="spanIeRg" name="spanIeRg" class="col-12"></span
         ></label>
 
-        <label for="spanDCriacao" class="col-6"
+        <label for="spanDCriacao" class="col-12 col-lg-6"
           >Data criação:
           <span id="spanDCriacao" name="spanDCriacao" class="col-12"></span
         ></label>
 
-        <table class="table table-hover">
+        <table class="table table-hover col-12">
           <thead>
             <tr class="">
-              <th class="col-1">Item</th>
-              <th class="col-3">Descrição</th>
-              <th class="col-1">Dimensão</th>
-              <th class="col-1">Qtde</th>
-              <th class="col-1">Peso(Kg)</th>
-              <th class="col-1">Preço Unit.</th>
-              <th class="col-1">Preço Total</th>
-              <th class="col-1">IPI%</th>
-              <th class="col-1">Data Entrega</th>
-              <th class="col-1"></th>
+              <th class="col-lg-1">Item</th>
+              <th class="col-lg-3">Descrição</th>
+              <th class="col-lg-1">Dimensão</th>
+              <th class="col-lg-1">Qtde</th>
+              <th class="col-lg-1">Peso(Kg)</th>
+              <th class="col-lg-1">Preço Unit.</th>
+              <th class="col-lg-1">Preço Total</th>
+              <th class="col-lg-1">IPI%</th>
+              <th class="col-lg-1">Data Entrega</th>
+              <th class="col-lg-1"></th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -128,7 +123,7 @@
               </td>
               <td colspan="2">Valor total:</td>
               <td>
-                <span id="inputValorTotal" name="inputValorTotal">R$0,00</span>
+                <span id="spanValorTotal" name="spanValorTotal">R$0,00</span>
               </td>
             </tr>
             <tr>
@@ -145,7 +140,7 @@
               <td colspan="4"></td>
               <td colspan="2">Valor Total IPI:</td>
               <td>
-                <span id="inputValorTotalIPI" name="inputValorTotalIPI"
+                <span id="spanValorTotalIPI" name="spanValorTotalIPI"
                   >R$0,00</span
                 >
               </td>
@@ -165,7 +160,7 @@
               <td colspan="4"></td>
               <td colspan="2">Valor Total C/ IPI:</td>
               <td>
-                <span id="inputValorTotalComIPI" name="inputValorTotalComIPI"
+                <span id="spanValorTotalComIPI" name="spanValorTotalComIPI"
                   >R$0,00</span
                 >
               </td>
@@ -175,7 +170,9 @@
               <td><input type="text " id="inputFrete" name="inputFrete" /></td>
               <td colspan="4"></td>
               <td colspan="2">Valor Total C/ IPI + Frete:</td>
-              <td><span id="inputTotal" name="inputTotal">R$0,00</span></td>
+              <td>
+                <span id="spanTotalFinal" name="spanTotalFinal">R$0,00</span>
+              </td>
             </tr>
           </tfoot>
         </table>

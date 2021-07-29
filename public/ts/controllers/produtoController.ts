@@ -39,12 +39,13 @@ export class ProdutoController {
   }
 
   init() {
-    document.querySelector('#form1').addEventListener("submit", (event) => {
+    document.querySelector("#form1").addEventListener("submit", (event) => {
       event.preventDefault();
-      this.salvar()});
+      this.salvar();
+    });
     this.btExcluir.addEventListener("click", () => this.excluir());
 
-    this.abrir(this.urlId)
+    this.abrir(this.urlId);
   }
 
   async salvar() {
@@ -108,62 +109,67 @@ export class ProdutoController {
   }
 
   async abrir(idProduto: string) {
-    const option = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    };
+    if (this.urlId != null) {
+      const option = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      };
 
-    let response = await fetch("/produto/" + idProduto, option);
-    let result = await response.json();
+      let response = await fetch("/produto/" + idProduto, option);
+      let result = await response.json();
 
-    if (response.ok) {
-      let criacaoProduto: any;
-      let alteracaoProduto: any;
+      if (response.ok) {
+        let criacaoProduto: any;
+        let alteracaoProduto: any;
 
-      if (result.dataCriacao != null) {
-        criacaoProduto = new Date(result.dataCriacao);
-        criacaoProduto =
-          criacaoProduto.getDate() +
-          "/" +
-          Number(criacaoProduto.getMonth() + 1) +
-          "/" +
-          criacaoProduto.getFullYear() +
-          " " +
-          criacaoProduto.getHours() +
-          ":" +
-          criacaoProduto.getMinutes() +
-          ":" +
-          criacaoProduto.getSeconds();
+        if (result.dataCriacao != null) {
+          criacaoProduto = new Date(result.dataCriacao);
+          criacaoProduto =
+            criacaoProduto.getDate() +
+            "/" +
+            Number(criacaoProduto.getMonth() + 1) +
+            "/" +
+            criacaoProduto.getFullYear() +
+            " " +
+            criacaoProduto.getHours() +
+            ":" +
+            criacaoProduto.getMinutes() +
+            ":" +
+            criacaoProduto.getSeconds();
+        }
+
+        if (result.dataAtualizacao != null) {
+          alteracaoProduto = new Date(result.dataAtualizacao);
+          alteracaoProduto =
+            alteracaoProduto.getDate() +
+            "/" +
+            Number(alteracaoProduto.getMonth() + 1) +
+            "/" +
+            alteracaoProduto.getFullYear() +
+            " " +
+            alteracaoProduto.getHours() +
+            ":" +
+            alteracaoProduto.getMinutes() +
+            ":" +
+            alteracaoProduto.getSeconds();
+        }
+
+        this.inputId.value = result.id;
+        this.inputNome.value = result.nome;
+        this.inputCategoria.value = result.categoria;
+        this.inputEspessura.value = result.espessura.replace(",", ".");
+        this.inputPeso.value = result.peso.replace(",", ".");
+        this.inputDCriacao.value = criacaoProduto;
+        this.inputDAlteracao.value = alteracaoProduto;
+      } else {
+        this.mensagemView.mensagemErro(
+          response.status +
+            " - " +
+            response.statusText +
+            "\n - " +
+            result.mensagem
+        );
       }
-
-      if (result.dataAtualizacao != null) {
-        alteracaoProduto = new Date(result.dataAtualizacao);
-        alteracaoProduto =
-          alteracaoProduto.getDate() +
-          "/" +
-          Number(alteracaoProduto.getMonth() + 1) +
-          "/" +
-          alteracaoProduto.getFullYear() +
-          " " +
-          alteracaoProduto.getHours() +
-          ":" +
-          alteracaoProduto.getMinutes() +
-          ":" +
-          alteracaoProduto.getSeconds();
-      }
-
-      console.log("dataCriacao: " + criacaoProduto);
-      console.log("dataAtualizacao: " + alteracaoProduto);
-
-      this.inputId.value = result.id;
-      this.inputNome.value = result.nome;
-      this.inputCategoria.value = result.categoria;
-      this.inputEspessura.value = result.espessura.replace(",", ".");
-      this.inputPeso.value = result.peso.replace(",", ".");
-      this.inputDCriacao.value = criacaoProduto;
-      this.inputDAlteracao.value = alteracaoProduto;
-    } else {
-      this.mensagemView.mensagemErro(response.status + " - " + response.statusText + "\n - " + result.mensagem)
     }
   }
 
@@ -178,8 +184,6 @@ export class ProdutoController {
     if (id != "") {
       let response = await fetch("/produto/" + id, option);
       let result = await response.json();
-      console.log("DELETE:");
-      console.log(result);
 
       if (response.ok) {
         this.mensagemView.mensagemSucesso("Produto excluido.");
