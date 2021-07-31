@@ -1,5 +1,5 @@
 export class Autocomplete {
-    static autocomplete(inp: any, arr: any) {
+    static autocomplete(inp: any, arr: any[]) {
         /*the autocomplete function takes two arguments,
         the text field element and an array of possible autocompleted values:*/
         var currentFocus: any;
