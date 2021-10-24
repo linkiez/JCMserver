@@ -2,6 +2,7 @@ const express = require('express')
 const customExpress = require('./config/customExpress')
 const conexao = require('./infra/conexao')
 const Tabelas = require('./infra/tabelas')
+var cors = require('cors')
 
 conexao.connect(erro => {
     if(erro){
