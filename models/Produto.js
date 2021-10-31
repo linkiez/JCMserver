@@ -28,6 +28,7 @@ class Produto {
      
             conexao.query(sql, produtoDatado, (erro, resultado) => {
                 if(erro){
+                    console.log(erro.message)
                     res.status(400).json(erro)
                 }else{
                     res.status(201).json(resultado) //retorna o produto com id para uso
@@ -40,6 +41,7 @@ class Produto {
 
         conexao.query(sql, (erro, resultados) => {
             if(erro){
+                console.log(erro.message)
                 res.status(400).json(erro)
             }else{
                 res.status(201).json(resultados)
@@ -52,6 +54,7 @@ class Produto {
         conexao.query(sql, (erro, resultados) => {
             const resultado = resultados[0]
             if(erro){
+                console.log(erro.message)
                 res.status(400).json(erro)
                 console.log(erro)
             }else{
@@ -65,6 +68,7 @@ class Produto {
         })
     }
     altera(id, valores, res){
+        valores.dataCriacao = moment(valores.dataCriacao).format('YYYY-MM-DD HH:mm:ss')
         const dataAtualizacao = moment().format('YYYY-MM-DD HH:mm:ss')
         const valoresDatado = {...valores, dataAtualizacao}
 
@@ -72,6 +76,7 @@ class Produto {
 
         conexao.query(sql, [valoresDatado, id], (erro, resultados) => {
             if(erro){
+                console.log(erro.message);
                 res.status(400).json(erro)
             }else{
                 res.status(201).json(resultados)
@@ -84,6 +89,7 @@ class Produto {
 
         conexao.query(sql, id, (erro, resultados) => {
             if(erro){
+                console.log(erro.message)
                 res.status(400).json(erro)
             }else{
                 res.status(201).json({id})

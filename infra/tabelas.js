@@ -61,7 +61,6 @@ class Tabelas {
         console.log(resultado.message);
       }
     });
-
   }
 }
 
